@@ -1,0 +1,6 @@
+{
+  "id": "003-add-slugify",
+  "repo": "practice_repo",
+  "hidden_test": "hidden_tests/test_003_slugify.py",
+  "issue": "Feature request: add slugify(text) to textkit and export it from the package (from textkit import slugify).\n\nRules: lowercase; every run of characters that are not ASCII letters or digits becomes a single '-'; no leading or trailing '-'.\n\nExamples: slugify(\"Hello, World!\") == \"hello-world\"; slugify(\"  Multi   Agent__SDK  \") == \"multi-agent-sdk\"; slugify(\"\") == \"\"."
+}

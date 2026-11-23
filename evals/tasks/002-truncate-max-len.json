@@ -1,0 +1,6 @@
+{
+  "id": "002-truncate-max-len",
+  "repo": "practice_repo",
+  "hidden_test": "hidden_tests/test_002_truncate.py",
+  "issue": "truncate() returns strings longer than max_len.\n\ntruncate(\"hello world\", 8) returns \"hello wo...\" (11 characters). The docstring promises the result is at most max_len characters INCLUDING the suffix, so it should return \"hello...\".\n\nIf max_len is smaller than the suffix length, return the suffix cut to max_len."
+}

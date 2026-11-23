@@ -1,0 +1,12 @@
+# Phase 1: just the API. Postgres and Redis join in phase 3, MCP servers in phase 2.
+services:
+  api:
+    build: .
+    env_file: .env
+    environment:
+      REPOS_ROOT: /repos
+      AUDIT_LOG_PATH: /app/var/audit.jsonl
+    ports: ["8000:8000"]
+    volumes:
+      - ./repos:/repos:ro          # source repos are read-only; agents work on temp copies
+      - ./var:/app/var

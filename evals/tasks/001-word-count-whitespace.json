@@ -1,0 +1,6 @@
+{
+  "id": "001-word-count-whitespace",
+  "repo": "practice_repo",
+  "hidden_test": "hidden_tests/test_001_word_count.py",
+  "issue": "word_count gives wrong answers for real-world text.\n\n- word_count(\"\") returns 1, expected 0\n- word_count(\"hello   world\") (several spaces) returns 4, expected 2\n- word_count(\"one\\ntwo\\tthree\") returns 2, expected 3\n\nWords should be separated by any run of whitespace."
+}

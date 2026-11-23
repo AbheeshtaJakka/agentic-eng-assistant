@@ -1,0 +1,35 @@
+name: CI
+on:
+  push:
+  pull_request:
+  workflow_dispatch:   # "Run workflow" button in the Actions tab triggers the eval job
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.12" }
+      - run: pip install -e ".[dev]"
+      - run: ruff check src tests
+      - run: ruff format --check src tests
+      # Unit + API tests use a scripted fake agent: no API key, no cost.
+      - run: pytest -q
+      # Fails fast if the Agents SDK API we depend on changes shape.
+      - run: python -c "from engassist.specialists.coding import build_coding_agent; a = build_coding_agent(); print(a.name, [t.name for t in a.tools])"
+
+  eval:
+    # Real-model golden-set run: manual only, because it costs money.
+    if: github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.12" }
+      - run: pip install -e .
+      - run: engassist eval
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+      - uses: actions/upload-artifact@v4
+        with: { name: eval-report, path: evals/results/latest.json }
